@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidFirebaseLearning">
-        <activity android:name="com.example.firebaselearning.presentation.feature.main.MainActivity">
+        <activity android:name=".presentation.feature.premenu.view.PreMenuActivity"></activity>
+        <activity
+            android:name=".presentation.feature.menu.view.MenuActivity"
+            android:label="@string/title_activity_menu" />
+        <activity android:name=".presentation.feature.authencation.login.view.LogInActivity" />
+        <activity android:name=".presentation.feature.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
