@@ -12,15 +12,33 @@
         <activity android:name=".presentation.feature.premenu.view.PreMenuActivity"></activity>
         <activity
             android:name=".presentation.feature.menu.view.MenuActivity"
-            android:label="@string/title_activity_menu" />
-        <activity android:name=".presentation.feature.authencation.login.view.LogInActivity" />
-        <activity android:name=".presentation.feature.main.MainActivity">
+            android:label="@string/title_activity_menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.feature.authencation.login.view.LogInActivity" />
+        <activity android:name=".presentation.feature.main.MainActivity">
+            <!--intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter-->
+        </activity>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications_black_24dp" />
+
+        <service
+            android:name=".presentation.core.service.MessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
