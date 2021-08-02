@@ -2,8 +2,9 @@ package com.example.firebaselearning.data.datasource.local.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import javax.inject.Inject
 
-class FirebasePreferences(context: Context) : BasePreferences() {
+class FirebasePreferences @Inject constructor(context: Context) : BasePreferences() {
 
     companion object {
         const val TOKEN_DEVICE_KEY = "token_device_key"

@@ -1,16 +1,17 @@
 package com.example.firebaselearning.data.datasource.local.source
 
 import com.example.firebaselearning.data.datasource.local.preferences.FirebasePreferences
+import javax.inject.Inject
 
-class FirebaseLocalDataSource (private val firebasePreferences: FirebasePreferences) {
+class FirebaseLocalDataSource @Inject constructor(private val firebasePreferences: FirebasePreferences) {
 
-    fun saveTokenDevice(token: String) {
+    suspend fun saveTokenDevice(token: String) {
         firebasePreferences.tokenDevice = token
     }
 
-    fun getTokenDevice(): String? = firebasePreferences.tokenDevice
+    suspend fun getTokenDevice(): String? = firebasePreferences.tokenDevice
 
 
-    fun cleanDataFirebase() = firebasePreferences.sharedPreferences.edit().clear().apply()
+    suspend fun cleanDataFirebase() = firebasePreferences.sharedPreferences.edit().clear().apply()
 
 }

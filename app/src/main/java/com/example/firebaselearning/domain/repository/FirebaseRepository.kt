@@ -1,6 +1,6 @@
 package com.example.firebaselearning.domain.repository
 
-interface SessionRepository {
+interface FirebaseRepository {
 
     suspend fun getToken(): String
 

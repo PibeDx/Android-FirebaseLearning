@@ -1,9 +1,10 @@
 package com.example.firebaselearning.domain.usercase
 
-import com.example.firebaselearning.domain.repository.SessionRepository
+import com.example.firebaselearning.domain.repository.FirebaseRepository
+import javax.inject.Inject
 
-class GetTokenFirebase(private val sessionRepository: SessionRepository) {
+class GetTokenFirebase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
 
-    suspend operator fun invoke(): String = sessionRepository.getToken()
+    suspend operator fun invoke(): String = firebaseRepository.getToken()
 
 }
