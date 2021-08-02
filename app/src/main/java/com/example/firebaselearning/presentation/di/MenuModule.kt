@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.firebaselearning.data.datasource.local.preferences.FirebasePreferences
 import com.example.firebaselearning.data.datasource.local.source.FirebaseLocalDataSource
 import com.example.firebaselearning.data.datasource.remote.source.FirebaseRemoteDataSource
-import com.example.firebaselearning.data.repository.SessionRepositoryImpl
+import com.example.firebaselearning.data.repository.FirebaseRepositoryImpl
 import com.example.firebaselearning.domain.usercase.GetTokenFirebase
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -22,13 +22,13 @@ fun providerFirebaseRemoteDataSource() = FirebaseRemoteDataSource(
     firebaseMessaging = providerFirebaseMessaging()
 )
 
-fun providerSessionRepository(context: Context) = SessionRepositoryImpl(
+fun providerFirebaseRepository(context: Context) = FirebaseRepositoryImpl(
     firebaseLocalDataSource = providerFirebaseLocalDataSource(context),
     firebaseRemoteDataSource = providerFirebaseRemoteDataSource()
 )
 
 fun providerGetTokenFirebase(context: Context) = GetTokenFirebase(
-    sessionRepository = providerSessionRepository(context)
+    firebaseRepository = providerFirebaseRepository(context)
 )
 
 class MenuContainer(context: Context) {

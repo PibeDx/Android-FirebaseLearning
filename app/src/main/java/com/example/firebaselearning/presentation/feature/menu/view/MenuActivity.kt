@@ -3,23 +3,37 @@ package com.example.firebaselearning.presentation.feature.menu.view
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.firebaselearning.R
-import com.example.firebaselearning.domain.usercase.GetTokenFirebase
-import com.example.firebaselearning.presentation.di.MenuContainer
+import com.example.firebaselearning.presentation.core.App
+import com.example.firebaselearning.presentation.di.component.DaggerMenuComponent
+import com.example.firebaselearning.presentation.di.core.AppComponent
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MenuActivity : AppCompatActivity() {
 
-    lateinit var getTokenFirebase: GetTokenFirebase
+    /*
+    val applicationGraph: AppComponent = DaggerAppComponent
+        .builder()
+        .appModule(AppModule(this))
+        .build()
+    val userDataRepository1: UserRepository = applicationGraph.userRepository()
+    val userDataRepository2: UserRepository = applicationGraph.userRepository()
+    */
+
+    @Inject
+    lateinit var menuViewModel: MenuViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerMenuComponent.builder()
+            .appComponent(appComponent())
+            .build()
+            .inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -34,20 +48,21 @@ class MenuActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        injectDependency()
+
+        menuViewModel.viewState.observe(this, Observer<MenuViewState> { value ->
+            when (value) {
+                is MenuViewState.GetTokenSuccess -> Log.i(TAG, "===> token: ${value.token}")
+            }
+        })
     }
 
-    private fun injectDependency() {
-        getTokenFirebase = MenuContainer(baseContext).getTokenFirebase
+    private fun appComponent(): AppComponent {
+        return (application as App).appComponent
     }
 
     override fun onResume() {
         super.onResume()
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val token = getTokenFirebase()
-            Log.i(TAG, "===> token: ${token}")
-        }
+        menuViewModel.getToken()
     }
 
     companion object {
